@@ -1,5 +1,6 @@
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+[Ll]ogs/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -30,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+
