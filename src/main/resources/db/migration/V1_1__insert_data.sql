@@ -14,21 +14,43 @@ values
 
 insert into bank_account(sum_of_money, person_id)
 values
-    (123.82, 1),
-    (0, 1),
-    (1000, 3),
-    (8294.90, 4),
-    (-10000, 5),
-    (100500, 5),
-    (0, 5),
-    (8023.01, 8),
-    (-100.75, 8),
-    (0, 9)
+    (123.82, (select id from person
+              where phone_number = '+380996540532')),
+    (0, (select id from person
+         where phone_number = '+380996540532')),
+    (1000, (select id from person
+            where phone_number = '+380933261502')),
+    (8294.90, (select id from person
+               where phone_number = '+380503252204')),
+    (-10000, (select id from person
+              where phone_number = '+380633026054')),
+    (100500, (select id from person
+              where phone_number = '+380633026054')),
+    (0, (select id from person
+         where phone_number = '+380633026054')),
+    (8023.01, (select id from person
+               where phone_number = '+380679843587')),
+    (-100.75, (select id from person
+               where phone_number = '+380679843587')),
+    (0, (select id from person
+         where phone_number = '+380569453087'))
 ;
 
 insert into payment(credit_account, debit_account, transaction_amount)
 values
-    (100000000005, 100000000007, 234),
-    (100000000009, 100000000000, 5294.38),
-    (100000000001, 100000000004, 10000)
+    (
+        (select id from bank_account limit 1 offset 5),
+        (select id from bank_account limit 1 offset 7),
+        234
+    ),
+    (
+        (select id from bank_account limit 1 offset 9),
+        (select id from bank_account limit 1),
+        5294.38
+    ),
+    (
+        (select id from bank_account limit 1 offset 1),
+        (select id from bank_account limit 1 offset 4),
+        10000
+    )
 ;
