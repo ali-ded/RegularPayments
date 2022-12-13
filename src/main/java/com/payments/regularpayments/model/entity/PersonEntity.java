@@ -1,4 +1,6 @@
-package com.payments.regularpayments.model;
+package com.payments.regularpayments.model.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,6 +19,7 @@ public class PersonEntity {
     private String phoneNumber;
     private Long inn;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "personEntity", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<BankAccountEntity> bankAccountEntities;
 
     public PersonEntity() {
@@ -28,6 +31,11 @@ public class PersonEntity {
         this.patronymic = patronymic;
         this.phoneNumber = phoneNumber;
         this.inn = inn;
+    }
+
+    public PersonEntity setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public PersonEntity setName(String name) {

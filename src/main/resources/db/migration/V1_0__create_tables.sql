@@ -4,7 +4,7 @@ create table person
     name            varchar(50) not null,
     surname         varchar(50) not null,
     patronymic      varchar(50),
-    phone_number    varchar(15) not null unique,
+    phone_number    varchar(17) not null unique,
     inn             bigint      unique check (inn > 0)
 )
 ;

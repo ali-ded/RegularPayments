@@ -1,8 +1,7 @@
-package com.payments.regularpayments.model;
+package com.payments.regularpayments.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity

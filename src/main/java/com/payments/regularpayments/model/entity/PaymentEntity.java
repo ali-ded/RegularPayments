@@ -1,4 +1,4 @@
-package com.payments.regularpayments.model;
+package com.payments.regularpayments.model.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class PaymentEntity {
     private BankAccountEntity debitAccount;
     @Column(name = "transaction_amount")
     private BigDecimal transactionAmount;
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "paymentEntity", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "paymentEntity", fetch = FetchType.LAZY)
     private Set<JournalEntryEntity> journalEntryEntities;
 
     public PaymentEntity() {

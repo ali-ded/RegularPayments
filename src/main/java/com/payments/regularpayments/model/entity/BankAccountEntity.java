@@ -1,4 +1,6 @@
-package com.payments.regularpayments.model;
+package com.payments.regularpayments.model.entity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,8 +14,9 @@ public class BankAccountEntity {
     private Long id;
     @Column(name = "sum_of_money")
     private BigDecimal sumOfMoney;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
+    @JsonManagedReference
     private PersonEntity personEntity;
 
     public BankAccountEntity() {
@@ -41,7 +44,6 @@ public class BankAccountEntity {
         return new StringJoiner(", ", BankAccountEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("sumOfMoney=" + sumOfMoney)
-                .add("personEntity=" + personEntity)
                 .toString();
     }
 }
