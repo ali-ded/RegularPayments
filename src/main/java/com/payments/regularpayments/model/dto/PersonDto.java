@@ -1,21 +1,20 @@
 package com.payments.regularpayments.model.dto;
 
-
 import javax.validation.constraints.*;
 import java.util.StringJoiner;
 
 public class PersonDto {
-    @Size(max = 50, message = "Максимальная длина поля 50 символов")
-    @NotBlank(message = "Имя обязательно должно быть указано")
+    @Size(max = 50, message = "максимальная длина поля 50 символов")
+    @NotBlank(message = "имя обязательно должно быть указано")
     private final String name;
-    @Size(max = 50, message = "Максимальная длина поля 50 символов")
-    @NotBlank(message = "Фамилия обязательно должна быть указана")
+    @Size(max = 50, message = "максимальная длина поля 50 символов")
+    @NotBlank(message = "фамилия обязательно должна быть указана")
     private final String surname;
-    @Size(max = 50, message = "Максимальная длина поля 50 символов")
+    @Size(max = 50, message = "максимальная длина поля 50 символов")
     private final String patronymic;
     @Pattern(regexp = "^[+]?\\d{3}?[-\\s]?\\d{2}[-\\s]?\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{2}$",
-            message = "Номер телефона должен быть указан в международном формате. Допустимые разделители: ' ', ','")
-    @NotNull(message = "Номер телефона обязательно должен быть указан")
+            message = "номер телефона должен быть указан в международном формате. Допустимые разделители: ' ', ','")
+    @NotNull(message = "номер телефона обязательно должен быть указан")
     private final String phoneNumber;
     @Pattern(regexp = "^((?!(0))[0-9]{12})$", message = "ИНН должен содержать 12 цифр и не начинаться с 0")
     @NotNull(message = "ИНН обязательно должен быть указан")

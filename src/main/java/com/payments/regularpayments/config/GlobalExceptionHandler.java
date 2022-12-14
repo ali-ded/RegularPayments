@@ -1,9 +1,6 @@
 package com.payments.regularpayments.config;
 
-import com.payments.regularpayments.exception.FieldErrorException;
-import com.payments.regularpayments.exception.PersonInnAlreadyExistsException;
-import com.payments.regularpayments.exception.PersonNotFoundException;
-import com.payments.regularpayments.exception.PersonPhoneNumberAlreadyExistsException;
+import com.payments.regularpayments.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,26 +18,26 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    private final Map<String, String> response = new HashMap<>();
 
-    @ExceptionHandler(PersonNotFoundException.class)
+    @ExceptionHandler({PersonNotFoundException.class, BankAccountNotFoundException.class, PaymentNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public Map<String, String> handleValidationNotFoundException(PersonNotFoundException e) {
-        LOGGER.warn("Handle validation exception '{}': {}", e.getClass().getSimpleName(), e.getMessage());
-        response.put("Exception", e.getClass().getSimpleName());
-        response.put("Message", e.getMessage());
-        return response;
+    public Map<String, String> handleValidationNotFoundException(Exception e) {
+        return makeExceptionResponse(e);
     }
 
     @ExceptionHandler({PersonInnAlreadyExistsException.class, PersonPhoneNumberAlreadyExistsException.class})
     @ResponseStatus(value = HttpStatus.CONFLICT)
     @ResponseBody
     public Map<String, String> handleValidationConflictException(Exception e) {
-        LOGGER.warn("Handle validation exception '{}': {}", e.getClass().getSimpleName(), e.getMessage());
-        response.put("Exception", e.getClass().getSimpleName());
-        response.put("Message", e.getMessage());
-        return response;
+        return makeExceptionResponse(e);
+    }
+
+    @ExceptionHandler(IdenticalBankAccountsException.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    @ResponseBody
+    public Map<String, String> handleValidationConflictException(IdenticalBankAccountsException e) {
+        return makeExceptionResponse(e);
     }
 
     @ExceptionHandler(FieldErrorException.class)
@@ -56,5 +53,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                 "поле не прошло валидацию",
                         (s, a) -> s + ", " + a)
                 );
+    }
+
+    private Map<String, String> makeExceptionResponse(Exception e) {
+        Map<String, String> response = new HashMap<>(2);
+        LOGGER.warn("Handle validation exception '{}': {}", e.getClass().getSimpleName(), e.getMessage());
+        response.put("Exception", e.getClass().getSimpleName());
+        response.put("Message", e.getMessage());
+        return response;
     }
 }

@@ -99,9 +99,10 @@ public class PersonController {
     @Operation(summary = "Удалить данные о клиенте банка по заданному идентификатору",
             description = "В случае успеха ничего не возвращает, HTTP ответ 200 OK. " +
                     "Если по идентификатору данные клиента не найдены - HTTP ответ 404 Not Found")
-    public ResponseEntity<?> deletePerson(@RequestParam("id") @Min(value = 1) long id) throws PersonNotFoundException {
+    public ResponseEntity<Void> deletePerson(@RequestParam("id") @Min(value = 1) long id) throws PersonNotFoundException {
         LOGGER.info("DELETE /delete?id={}", id);
         personService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

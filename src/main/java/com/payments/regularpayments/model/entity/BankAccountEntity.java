@@ -27,6 +27,18 @@ public class BankAccountEntity {
         this.personEntity = personEntity;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSumOfMoney(BigDecimal sumOfMoney) {
+        this.sumOfMoney = sumOfMoney;
+    }
+
+    public void setPersonEntity(PersonEntity personEntity) {
+        this.personEntity = personEntity;
+    }
+
     public Long getId() {
         return id;
     }

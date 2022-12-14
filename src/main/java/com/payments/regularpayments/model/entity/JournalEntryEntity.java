@@ -1,5 +1,7 @@
 package com.payments.regularpayments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.StringJoiner;
@@ -12,6 +14,7 @@ public class JournalEntryEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "payment_id")
+    @JsonManagedReference
     private PaymentEntity paymentEntity;
     @Column(name = "payment_result")
     private Boolean paymentResult;

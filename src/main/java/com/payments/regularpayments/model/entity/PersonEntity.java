@@ -33,34 +33,28 @@ public class PersonEntity {
         this.inn = inn;
     }
 
-    public PersonEntity setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
-    public PersonEntity setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public PersonEntity setSurname(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
-        return this;
     }
 
-    public PersonEntity setPatronymic(String patronymic) {
+    public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
-        return this;
     }
 
-    public PersonEntity setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
     }
 
-    public PersonEntity setInn(Long inn) {
+    public void setInn(Long inn) {
         this.inn = inn;
-        return this;
     }
 
     public Long getId() {

@@ -1,5 +1,8 @@
 package com.payments.regularpayments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -13,13 +16,16 @@ public class PaymentEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "credit_account")
+    @JsonManagedReference
     private BankAccountEntity creditAccount;
     @ManyToOne
     @JoinColumn(name = "debit_account")
+    @JsonManagedReference
     private BankAccountEntity debitAccount;
     @Column(name = "transaction_amount")
     private BigDecimal transactionAmount;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "paymentEntity", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<JournalEntryEntity> journalEntryEntities;
 
     public PaymentEntity() {
@@ -29,6 +35,26 @@ public class PaymentEntity {
         this.creditAccount = creditAccount;
         this.debitAccount = debitAccount;
         this.transactionAmount = transactionAmount;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreditAccount(BankAccountEntity creditAccount) {
+        this.creditAccount = creditAccount;
+    }
+
+    public void setDebitAccount(BankAccountEntity debitAccount) {
+        this.debitAccount = debitAccount;
+    }
+
+    public void setTransactionAmount(BigDecimal transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
+    public void setJournalEntryEntities(Set<JournalEntryEntity> journalEntryEntities) {
+        this.journalEntryEntities = journalEntryEntities;
     }
 
     public Long getId() {
