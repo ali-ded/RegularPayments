@@ -4,8 +4,8 @@ import com.payments.regularpayments.exception.FieldErrorException;
 import com.payments.regularpayments.exception.PersonInnAlreadyExistsException;
 import com.payments.regularpayments.exception.PersonNotFoundException;
 import com.payments.regularpayments.exception.PersonPhoneNumberAlreadyExistsException;
-import com.payments.regularpayments.model.dto.PersonDto;
-import com.payments.regularpayments.model.entity.PersonEntity;
+import com.payments.regularpayments.dto.PersonDto;
+import com.payments.regularpayments.model.PersonEntity;
 import com.payments.regularpayments.service.PersonService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -36,22 +36,25 @@ public class PersonController {
     @Operation(summary = "Получить список всех клиентов банка",
             description = "Возвращает список всех зарегистрированных клиентов банка")
     public ResponseEntity<List<PersonEntity>> getAllPersons() {
+        List<PersonEntity> personEntities = personService.findAll();
         LOGGER.info("GET /get-all");
-        return ResponseEntity.ok(personService.findAll());
+        return ResponseEntity.ok(personEntities);
     }
 
     @GetMapping("/get")
     @Operation(summary = "Получить регистрационные данные о клиенте банка по идентификатору",
             description = "Возвращает информацию о клиенте банка, зарегистрированному по заданному идентификатору")
-    public ResponseEntity<PersonEntity> getPerson(@RequestParam("id") long id) throws PersonNotFoundException {
+    public ResponseEntity<PersonEntity> getPerson(@RequestParam("id") final long id) throws
+            PersonNotFoundException {
+        PersonEntity personEntity = personService.findById(id);
         LOGGER.info("GET /get?id={}", id);
-        return ResponseEntity.ok(personService.findById(id));
+        return ResponseEntity.ok(personEntity);
     }
 
     @PostMapping("/register")
     @Operation(summary = "Зарегистрировать нового клиента банка",
             description = "В случае успешного сохранения метод возвращает сущность сохраненного в БД клиента")
-    public ResponseEntity<PersonEntity> registerPerson(@RequestBody @Valid PersonDto personDto,
+    public ResponseEntity<PersonEntity> registerPerson(@RequestBody @Valid final PersonDto personDto,
                                                        BindingResult bindingResult) throws
             PersonInnAlreadyExistsException, FieldErrorException, PersonPhoneNumberAlreadyExistsException {
         if (bindingResult.hasErrors()) {
@@ -74,9 +77,9 @@ public class PersonController {
     @PutMapping("/edit")
     @Operation(summary = "Изменить регистрационные данные клиента банка",
             description = "Возвращает сущность клиента банка с измененными данными")
-    public ResponseEntity<PersonEntity> editPerson(@RequestBody @Valid PersonDto personDto,
+    public ResponseEntity<PersonEntity> editPerson(@RequestBody @Valid final PersonDto personDto,
                                                    BindingResult bindingResult,
-                                                   @RequestParam("id") @Min(value = 1) long id) throws
+                                                   @RequestParam("id") @Min(value = 1) final long id) throws
             FieldErrorException, PersonNotFoundException {
         if (bindingResult.hasErrors()) {
             LOGGER.info("PUT /edit?id={}: {}", id, HttpStatus.BAD_REQUEST);
@@ -99,10 +102,10 @@ public class PersonController {
     @Operation(summary = "Удалить данные о клиенте банка по заданному идентификатору",
             description = "В случае успеха ничего не возвращает, HTTP ответ 200 OK. " +
                     "Если по идентификатору данные клиента не найдены - HTTP ответ 404 Not Found")
-    public ResponseEntity<Void> deletePerson(@RequestParam("id") @Min(value = 1) long id) throws PersonNotFoundException {
+    public ResponseEntity<Void> deletePerson(@RequestParam("id") @Min(value = 1) final long id) throws
+            PersonNotFoundException {
         LOGGER.info("DELETE /delete?id={}", id);
         personService.deleteById(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -1,14 +1,10 @@
-package com.payments.regularpayments.model.entity;
+package com.payments.regularpayments.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.Period;
-import java.time.temporal.TemporalUnit;
 import java.util.Set;
 import java.util.StringJoiner;
 

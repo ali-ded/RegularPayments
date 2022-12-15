@@ -1,4 +1,4 @@
-package com.payments.regularpayments.model.dto;
+package com.payments.regularpayments.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;

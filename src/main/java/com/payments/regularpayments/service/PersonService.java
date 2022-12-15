@@ -4,8 +4,8 @@ import com.payments.regularpayments.exception.PersonInnAlreadyExistsException;
 import com.payments.regularpayments.exception.PersonNotFoundException;
 import com.payments.regularpayments.exception.PersonPhoneNumberAlreadyExistsException;
 import com.payments.regularpayments.mapper.PersonMapper;
-import com.payments.regularpayments.model.dto.PersonDto;
-import com.payments.regularpayments.model.entity.PersonEntity;
+import com.payments.regularpayments.dto.PersonDto;
+import com.payments.regularpayments.model.PersonEntity;
 import com.payments.regularpayments.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ public class PersonService {
     }
 
     public PersonEntity save(PersonDto personDto) throws PersonInnAlreadyExistsException, PersonPhoneNumberAlreadyExistsException {
+        LOGGER.info("New person registration");
         if (personRepository.existsByInn(Long.valueOf(personDto.getInn()))) {
             throw new PersonInnAlreadyExistsException("Клиент банка с таким ИНН уже зарегистрирован");
         }
@@ -35,6 +36,7 @@ public class PersonService {
     }
 
     public PersonEntity update(PersonDto personDto, Long id) throws PersonNotFoundException {
+        LOGGER.info("Update person data by ID {}", id);
         if (personRepository.existsById(id)) {
             PersonEntity personEntity = PersonMapper.INSTANCE.personDtoToPersonEntity(personDto);
             personEntity.setId(id);
@@ -45,15 +47,18 @@ public class PersonService {
     }
 
     public PersonEntity findById(Long id) throws PersonNotFoundException {
+        LOGGER.info("Person search by ID {}", id);
         return personRepository.findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("По заданному идентификатору клиент банка не найден"));
     }
 
     public List<PersonEntity> findAll() {
+        LOGGER.info("Search all persons");
         return (List<PersonEntity>) personRepository.findAll();
     }
 
     public void deleteById(Long id) throws PersonNotFoundException {
+        LOGGER.info("Deleting a person by ID {}", id);
         if (personRepository.existsById(id)) {
             personRepository.deleteById(id);
         } else {

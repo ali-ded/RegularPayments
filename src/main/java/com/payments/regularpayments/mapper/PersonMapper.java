@@ -1,7 +1,7 @@
 package com.payments.regularpayments.mapper;
 
-import com.payments.regularpayments.model.dto.PersonDto;
-import com.payments.regularpayments.model.entity.PersonEntity;
+import com.payments.regularpayments.dto.PersonDto;
+import com.payments.regularpayments.model.PersonEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

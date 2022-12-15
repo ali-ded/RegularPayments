@@ -1,4 +1,4 @@
-package com.payments.regularpayments.model.entity;
+package com.payments.regularpayments.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

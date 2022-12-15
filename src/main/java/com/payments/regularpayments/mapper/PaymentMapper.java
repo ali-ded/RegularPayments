@@ -1,8 +1,8 @@
 package com.payments.regularpayments.mapper;
 
-import com.payments.regularpayments.model.dto.PaymentCreateDto;
-import com.payments.regularpayments.model.dto.PaymentDto;
-import com.payments.regularpayments.model.entity.PaymentEntity;
+import com.payments.regularpayments.dto.PaymentCreateDto;
+import com.payments.regularpayments.dto.PaymentDto;
+import com.payments.regularpayments.model.PaymentEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

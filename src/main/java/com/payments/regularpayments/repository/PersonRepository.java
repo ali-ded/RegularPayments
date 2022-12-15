@@ -1,6 +1,6 @@
 package com.payments.regularpayments.repository;
 
-import com.payments.regularpayments.model.entity.PersonEntity;
+import com.payments.regularpayments.model.PersonEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

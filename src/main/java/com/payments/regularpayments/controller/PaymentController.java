@@ -4,8 +4,8 @@ import com.payments.regularpayments.exception.BankAccountNotFoundException;
 import com.payments.regularpayments.exception.FieldErrorException;
 import com.payments.regularpayments.exception.IdenticalBankAccountsException;
 import com.payments.regularpayments.exception.PaymentNotFoundException;
-import com.payments.regularpayments.model.dto.PaymentCreateDto;
-import com.payments.regularpayments.model.dto.PaymentDto;
+import com.payments.regularpayments.dto.PaymentCreateDto;
+import com.payments.regularpayments.dto.PaymentDto;
 import com.payments.regularpayments.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/payment", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -95,5 +96,12 @@ public class PaymentController {
         }
         LOGGER.info("PUT /update: {}", HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/get-all-payments-by-payer-inn")
+    public ResponseEntity<List<PaymentDto>> getAllPaymentsByPayerInn(@RequestParam ("inn") final long inn) {
+        List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByPayerInn(inn);
+        LOGGER.info("GET /get-all-payments-by-payer-inn: {}", HttpStatus.OK);
+        return ResponseEntity.ok(paymentDtoList);
     }
 }

@@ -4,15 +4,18 @@ import com.payments.regularpayments.exception.BankAccountNotFoundException;
 import com.payments.regularpayments.exception.IdenticalBankAccountsException;
 import com.payments.regularpayments.exception.PaymentNotFoundException;
 import com.payments.regularpayments.mapper.PaymentMapper;
-import com.payments.regularpayments.model.dto.PaymentCreateDto;
-import com.payments.regularpayments.model.dto.PaymentDto;
-import com.payments.regularpayments.model.entity.PaymentEntity;
+import com.payments.regularpayments.dto.PaymentCreateDto;
+import com.payments.regularpayments.dto.PaymentDto;
+import com.payments.regularpayments.model.PaymentEntity;
 import com.payments.regularpayments.repository.BankAccountRepository;
 import com.payments.regularpayments.repository.PaymentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentService {
@@ -29,6 +32,7 @@ public class PaymentService {
     }
 
     public PaymentDto save(PaymentCreateDto paymentCreateDto) throws BankAccountNotFoundException, IdenticalBankAccountsException {
+        LOGGER.info("Create a new payment");
         isCorrectBankAccounts(paymentCreateDto);
         PaymentEntity paymentEntity = paymentRepository.save(paymentMapper.paymentCreateDtoToPaymentEntity(paymentCreateDto));
         return paymentMapper.paymentEntityToPaymentDto(paymentEntity);
@@ -49,11 +53,20 @@ public class PaymentService {
     }
 
     public void update(PaymentDto paymentDto) throws PaymentNotFoundException, BankAccountNotFoundException, IdenticalBankAccountsException {
+        LOGGER.info("Update payment data by ID {}", paymentDto.getId());
         isCorrectBankAccounts(paymentDto);
         if (paymentRepository.existsById(paymentDto.getId())) {
             paymentRepository.save(paymentMapper.paymentDtoToPaymentEntity(paymentDto));
         } else {
             throw new PaymentNotFoundException("Невозможно обновить данные. По указанному идентификатору платеж не найден");
         }
+    }
+
+    public List<PaymentDto> getPaymentEntitiesByPayerInn(long inn) {
+        LOGGER.info("Search for a list of payments by payer's INN {}", inn);
+        List<PaymentEntity> paymentEntities = paymentRepository.findPaymentEntitiesByPayerInn(inn);
+        return paymentEntities.stream()
+                .map(paymentMapper::paymentEntityToPaymentDto)
+                .collect(Collectors.toList());
     }
 }
