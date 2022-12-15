@@ -104,4 +104,11 @@ public class PaymentController {
         LOGGER.info("GET /get-all-payments-by-payer-inn: {}", HttpStatus.OK);
         return ResponseEntity.ok(paymentDtoList);
     }
+
+    @GetMapping("/get-all-payments-by-recipient-inn")
+    public ResponseEntity<List<PaymentDto>> getAllPaymentsByRecipientInn(@RequestParam ("inn") final long inn) {
+        List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByRecipientInn(inn);
+        LOGGER.info("GET /get-all-payments-by-recipient-inn: {}", HttpStatus.OK);
+        return ResponseEntity.ok(paymentDtoList);
+    }
 }

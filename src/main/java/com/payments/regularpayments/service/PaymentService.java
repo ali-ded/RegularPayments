@@ -69,4 +69,12 @@ public class PaymentService {
                 .map(paymentMapper::paymentEntityToPaymentDto)
                 .collect(Collectors.toList());
     }
+
+    public List<PaymentDto> getPaymentEntitiesByRecipientInn(long inn) {
+        LOGGER.info("Search for a list of payments by recipient's INN {}", inn);
+        List<PaymentEntity> paymentEntities = paymentRepository.findPaymentEntitiesByRecipientInn(inn);
+        return paymentEntities.stream()
+                .map(paymentMapper::paymentEntityToPaymentDto)
+                .collect(Collectors.toList());
+    }
 }

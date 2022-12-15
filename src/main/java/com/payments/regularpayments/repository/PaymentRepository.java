@@ -18,4 +18,13 @@ public interface PaymentRepository extends CrudRepository<PaymentEntity, Long> {
             "join PersonEntity personEntity on bankAccountEntity.personEntity.id = personEntity.id " +
             "where personEntity.inn = :inn)")
     List<PaymentEntity> findPaymentEntitiesByPayerInn(@Param("inn") long inn);
+
+    @Query("select paymentEntity " +
+            "from PaymentEntity paymentEntity " +
+            "where paymentEntity.debitAccount in " +
+            "(select bankAccountEntity.id " +
+            "from BankAccountEntity bankAccountEntity " +
+            "join PersonEntity personEntity on bankAccountEntity.personEntity.id = personEntity.id " +
+            "where personEntity.inn = :inn)")
+    List<PaymentEntity> findPaymentEntitiesByRecipientInn(@Param("inn") long inn);
 }
