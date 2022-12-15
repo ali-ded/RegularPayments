@@ -29,16 +29,8 @@ public class PaymentService {
     }
 
     public PaymentDto save(PaymentCreateDto paymentCreateDto) throws BankAccountNotFoundException, IdenticalBankAccountsException {
-//        if (!bankAccountRepository.existsById(paymentCreateDto.getCreditAccount())) {
-//            LOGGER.warn("Payer account number '{}' not found", paymentCreateDto.getCreditAccount());
-//            throw new BankAccountNotFoundException("Номер счета плательщика не найден");
-//        }
-//        if (!bankAccountRepository.existsById(paymentCreateDto.getDebitAccount())) {
-//            LOGGER.warn("Beneficiary account number '{}' not found", paymentCreateDto.getDebitAccount());
-//            throw new BankAccountNotFoundException("Номер счета получателя не найден");
-//        }
         isCorrectBankAccounts(paymentCreateDto);
-        PaymentEntity paymentEntity = paymentRepository.save(paymentMapper.paymentDtoToPaymentEntity(paymentCreateDto));
+        PaymentEntity paymentEntity = paymentRepository.save(paymentMapper.paymentCreateDtoToPaymentEntity(paymentCreateDto));
         return paymentMapper.paymentEntityToPaymentDto(paymentEntity);
     }
 

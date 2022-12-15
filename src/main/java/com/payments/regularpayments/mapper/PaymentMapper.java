@@ -2,25 +2,45 @@ package com.payments.regularpayments.mapper;
 
 import com.payments.regularpayments.model.dto.PaymentCreateDto;
 import com.payments.regularpayments.model.dto.PaymentDto;
-import com.payments.regularpayments.model.entity.BankAccountEntity;
 import com.payments.regularpayments.model.entity.PaymentEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+import java.time.Duration;
+
+@Mapper(componentModel = "spring", imports = {Duration.class, PaymentCreateDto.class})
 public interface PaymentMapper {
 
     @Mapping(source = "paymentCreateDto.creditAccount", target = "creditAccount.id")
     @Mapping(source = "paymentCreateDto.debitAccount", target = "debitAccount.id")
-    PaymentEntity paymentDtoToPaymentEntity(PaymentCreateDto paymentCreateDto);
-
-//    BankAccountEntity bankAccountIdToBankAccountEntity(Long id);
+    @Mapping(target = "writeOffPeriod",
+            expression = "java(writeOffPeriodToLongMinutes(paymentCreateDto.getWriteOffPeriod()))")
+    PaymentEntity paymentCreateDtoToPaymentEntity(PaymentCreateDto paymentCreateDto);
 
     @Mapping(source = "paymentEntity.creditAccount.id", target = "creditAccount")
     @Mapping(source = "paymentEntity.debitAccount.id", target = "debitAccount")
+    @Mapping(target = "writeOffPeriod",
+    expression = "java(longMinutesToWriteOffPeriod(paymentEntity.getWriteOffPeriod()))")
     PaymentDto paymentEntityToPaymentDto(PaymentEntity paymentEntity);
 
     @InheritInverseConfiguration
+    @Mapping(target = "writeOffPeriod",
+            expression = "java(writeOffPeriodToLongMinutes(paymentDto.getWriteOffPeriod()))")
     PaymentEntity paymentDtoToPaymentEntity(PaymentDto paymentDto);
+
+    default Long writeOffPeriodToLongMinutes(PaymentCreateDto.WriteOffPeriod writeOffPeriod) {
+        return Duration
+                .ofDays(writeOffPeriod.getDays())
+                .plusHours(writeOffPeriod.getHours())
+                .plusMinutes(writeOffPeriod.getMinutes())
+                .toMinutes();
+    }
+    default PaymentCreateDto.WriteOffPeriod longMinutesToWriteOffPeriod(Long minutes) {
+        Duration duration = Duration.ofMinutes(minutes);
+        return new PaymentCreateDto.WriteOffPeriod(
+                duration.toDaysPart(),
+                (long) duration.toHoursPart(),
+                (long) duration.toMinutesPart());
+    }
 }

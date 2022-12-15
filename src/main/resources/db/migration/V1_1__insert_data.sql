@@ -36,21 +36,24 @@ values
          where phone_number = '+380569453087'))
 ;
 
-insert into payment(credit_account, debit_account, transaction_amount)
+insert into payment(credit_account, debit_account, transaction_amount, write_off_period)
 values
     (
         (select id from bank_account limit 1 offset 5),
         (select id from bank_account limit 1 offset 7),
-        234
+        234,
+        3
     ),
     (
         (select id from bank_account limit 1 offset 9),
         (select id from bank_account limit 1),
-        5294.38
+        5294.38,
+        1
     ),
     (
         (select id from bank_account limit 1 offset 1),
         (select id from bank_account limit 1 offset 4),
-        10000
+        10000,
+        4
     )
 ;

@@ -27,7 +27,8 @@ create table payment
     id                  bigserial       primary key,
     credit_account      bigint          not null references bank_account on delete cascade,
     debit_account       bigint          not null references bank_account on delete cascade,
-    transaction_amount  numeric(14,2)   check (transaction_amount > 0),
+    transaction_amount  numeric(14,2)   not null check (transaction_amount > 0),
+    write_off_period    bigint          not null, --период списания в минутах
     constraint check_for_identical_accounts check (credit_account != debit_account)
 )
 ;

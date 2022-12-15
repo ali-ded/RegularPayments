@@ -18,6 +18,8 @@ public class PaymentCreateDto {
     @NotNull(message = "сумма транзакции обязательно должна быть указана")
     private BigDecimal transactionAmount;
 
+    private WriteOffPeriod writeOffPeriod;
+
     public PaymentCreateDto(Long creditAccount, Long debitAccount, BigDecimal transactionAmount) {
         this.creditAccount = creditAccount;
         this.debitAccount = debitAccount;
@@ -36,6 +38,10 @@ public class PaymentCreateDto {
         this.transactionAmount = transactionAmount;
     }
 
+    public void setWriteOffPeriod(WriteOffPeriod writeOffPeriod) {
+        this.writeOffPeriod = writeOffPeriod;
+    }
+
     public Long getCreditAccount() {
         return creditAccount;
     }
@@ -48,6 +54,10 @@ public class PaymentCreateDto {
         return transactionAmount;
     }
 
+    public WriteOffPeriod getWriteOffPeriod() {
+        return writeOffPeriod;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", PaymentCreateDto.class.getSimpleName() + "[", "]")
@@ -55,5 +65,56 @@ public class PaymentCreateDto {
                 .add("debitAccount=" + debitAccount)
                 .add("transactionAmount=" + transactionAmount)
                 .toString();
+    }
+
+    public static class WriteOffPeriod {
+        private Long days = 0L;
+        private Long hours = 0L;
+        private Long minutes = 0L;
+
+        public WriteOffPeriod(Long days, Long hours, Long minutes) {
+            if (days != null) {
+                this.days = days;
+            }
+            if (hours != null) {
+                this.hours = hours;
+            }
+            if (minutes != null) {
+                this.minutes = minutes;
+            }
+        }
+
+        public Long getDays() {
+            return days;
+        }
+
+        public void setDays(Long days) {
+            this.days = days;
+        }
+
+        public Long getHours() {
+            return hours;
+        }
+
+        public void setHours(Long hours) {
+            this.hours = hours;
+        }
+
+        public Long getMinutes() {
+            return minutes;
+        }
+
+        public void setMinutes(Long minutes) {
+            this.minutes = minutes;
+        }
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", WriteOffPeriod.class.getSimpleName() + "[", "]")
+                    .add("days=" + days)
+                    .add("hours=" + hours)
+                    .add("minutes=" + minutes)
+                    .toString();
+        }
     }
 }
