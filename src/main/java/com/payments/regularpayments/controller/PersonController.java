@@ -47,7 +47,7 @@ public class PersonController {
     public ResponseEntity<PersonEntity> getPerson(@RequestParam("id") final long id) throws
             PersonNotFoundException {
         PersonEntity personEntity = personService.findById(id);
-        LOGGER.info("GET /get?id={}", id);
+        LOGGER.info("GET /get?id={} {}", id, HttpStatus.OK);
         return ResponseEntity.ok(personEntity);
     }
 

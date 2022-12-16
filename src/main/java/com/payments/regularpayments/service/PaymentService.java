@@ -38,6 +38,13 @@ public class PaymentService {
         return paymentMapper.paymentEntityToPaymentDto(paymentEntity);
     }
 
+    public PaymentDto findById(long id) throws PaymentNotFoundException {
+        LOGGER.info("Payment search by ID {}", id);
+        PaymentEntity paymentEntity = paymentRepository.findById(id)
+                .orElseThrow(() -> new PaymentNotFoundException("По заданному идентификатору платеж не найден"));
+        return paymentMapper.paymentEntityToPaymentDto(paymentEntity);
+    }
+
     private void isCorrectBankAccounts(PaymentCreateDto paymentDto) throws BankAccountNotFoundException, IdenticalBankAccountsException {
         if (paymentDto.getCreditAccount().equals(paymentDto.getDebitAccount())) {
             throw new IdenticalBankAccountsException("Одинаковый счет плательщика и получателя");
