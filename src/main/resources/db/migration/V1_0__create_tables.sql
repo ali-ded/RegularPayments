@@ -38,6 +38,6 @@ create table journal_entry
     id              bigserial   primary key,
     payment_id      bigint      not null references payment on delete cascade,
     payment_result  boolean     not null,
-    payment_date    timestamp   not null default current_timestamp
+    payment_date    timestamp   not null
 )
 ;

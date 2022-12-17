@@ -6,6 +6,7 @@ import com.payments.regularpayments.model.PaymentEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.time.Duration;
 
@@ -22,6 +23,7 @@ public interface PaymentMapper {
     @Mapping(source = "paymentEntity.debitAccount.id", target = "debitAccount")
     @Mapping(target = "writeOffPeriod",
     expression = "java(longMinutesToWriteOffPeriod(paymentEntity.getWriteOffPeriod()))")
+    @Named("paymentEntityToPaymentDto")
     PaymentDto paymentEntityToPaymentDto(PaymentEntity paymentEntity);
 
     @InheritInverseConfiguration

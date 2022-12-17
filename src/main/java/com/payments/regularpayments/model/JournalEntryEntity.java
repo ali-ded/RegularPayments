@@ -24,17 +24,26 @@ public class JournalEntryEntity {
     public JournalEntryEntity() {
     }
 
-    public JournalEntryEntity(PaymentEntity paymentEntity, Boolean paymentResult) {
+    public JournalEntryEntity(PaymentEntity paymentEntity) {
         this.paymentEntity = paymentEntity;
-        this.paymentResult = paymentResult;
+        this.paymentResult = true;
+        this.paymentDate = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setPaymentEntity(PaymentEntity paymentEntity) {
+        this.paymentEntity = paymentEntity;
+    }
+
     public PaymentEntity getPaymentEntity() {
         return paymentEntity;
+    }
+
+    public void setPaymentResult(Boolean paymentResult) {
+        this.paymentResult = paymentResult;
     }
 
     public Boolean getPaymentResult() {

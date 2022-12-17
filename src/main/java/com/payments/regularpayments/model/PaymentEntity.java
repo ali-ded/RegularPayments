@@ -14,11 +14,11 @@ public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "credit_account")
     @JsonManagedReference
     private BankAccountEntity creditAccount;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "debit_account")
     @JsonManagedReference
     private BankAccountEntity debitAccount;
@@ -26,11 +26,15 @@ public class PaymentEntity {
     private BigDecimal transactionAmount;
     @Column(name = "write_off_period")
     private Long writeOffPeriod; // Период списания в минутах
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "paymentEntity", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "paymentEntity", fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<JournalEntryEntity> journalEntryEntities;
 
     public PaymentEntity() {
+    }
+
+    public PaymentEntity(Long id) {
+        this.id = id;
     }
 
     public PaymentEntity(BankAccountEntity creditAccount,

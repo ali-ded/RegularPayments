@@ -31,7 +31,7 @@ public class PaymentService {
         this.paymentMapper = paymentMapper;
     }
 
-    public PaymentDto save(PaymentCreateDto paymentCreateDto) throws BankAccountNotFoundException, IdenticalBankAccountsException {
+    public PaymentDto create(PaymentCreateDto paymentCreateDto) throws BankAccountNotFoundException, IdenticalBankAccountsException {
         LOGGER.info("Create a new payment");
         isCorrectBankAccounts(paymentCreateDto);
         PaymentEntity paymentEntity = paymentRepository.save(paymentMapper.paymentCreateDtoToPaymentEntity(paymentCreateDto));

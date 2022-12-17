@@ -69,7 +69,7 @@ public class PaymentController {
         }
         PaymentDto paymentDto;
         try {
-            paymentDto = paymentService.save(paymentCreateDto);
+            paymentDto = paymentService.create(paymentCreateDto);
         } catch (BankAccountNotFoundException bankAccountNotFoundException) {
             LOGGER.info("POST /create: {}", HttpStatus.NOT_FOUND);
             throw bankAccountNotFoundException;
