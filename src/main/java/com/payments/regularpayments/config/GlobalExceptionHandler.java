@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler({PersonNotFoundException.class, BankAccountNotFoundException.class, PaymentNotFoundException.class})
+    @ExceptionHandler({PersonNotFoundException.class, BankAccountNotFoundException.class,
+            PaymentNotFoundException.class, JournalEntryNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public Map<String, String> handleValidationNotFoundException(Exception e) {

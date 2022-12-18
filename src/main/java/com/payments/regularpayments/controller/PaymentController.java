@@ -165,7 +165,7 @@ public class PaymentController {
                     @ApiResponse(responseCode = "500", description = "Ошибка сервера")})
     public ResponseEntity<List<PaymentDto>> getAllPaymentsByPayerInn(@RequestParam("inn") final long inn) {
         List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByPayerInn(inn);
-        LOGGER.info("GET /get-all-payments-by-payer-inn: {}", HttpStatus.OK);
+        LOGGER.info("GET /get-all-payments-by-payer-inn?inn={}: {}", inn, HttpStatus.OK);
         return ResponseEntity.ok(paymentDtoList);
     }
 
@@ -179,7 +179,7 @@ public class PaymentController {
                     @ApiResponse(responseCode = "500", description = "Ошибка сервера")})
     public ResponseEntity<List<PaymentDto>> getAllPaymentsByRecipientInn(@RequestParam("inn") final long inn) {
         List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByRecipientInn(inn);
-        LOGGER.info("GET /get-all-payments-by-recipient-inn: {}", HttpStatus.OK);
+        LOGGER.info("GET /get-all-payments-by-recipient-inn?inn={}: {}", inn, HttpStatus.OK);
         return ResponseEntity.ok(paymentDtoList);
     }
 }
