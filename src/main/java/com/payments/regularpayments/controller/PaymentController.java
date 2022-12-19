@@ -1,5 +1,6 @@
 package com.payments.regularpayments.controller;
 
+import com.payments.regularpayments.dto.JournalEntryDto;
 import com.payments.regularpayments.exception.*;
 import com.payments.regularpayments.dto.PaymentCreateDto;
 import com.payments.regularpayments.dto.PaymentDto;
@@ -161,7 +162,9 @@ public class PaymentController {
                     "Если по заданному ИНН плательщика платежи не найдены - возвращает пустой список",
             parameters = @Parameter(name = "inn", description = "ИНН плательщика"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успех"),
+                    @ApiResponse(responseCode = "200", description = "Успех", content =
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PaymentDto.class))),
                     @ApiResponse(responseCode = "500", description = "Ошибка сервера")})
     public ResponseEntity<List<PaymentDto>> getAllPaymentsByPayerInn(@RequestParam("inn") final long inn) {
         List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByPayerInn(inn);
@@ -175,11 +178,28 @@ public class PaymentController {
                     "Если по заданному ИНН получателя платежи не найдены - возвращает пустой список",
             parameters = @Parameter(name = "inn", description = "ИНН получателя"),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Успех"),
+                    @ApiResponse(responseCode = "200", description = "Успех", content =
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PaymentDto.class))),
                     @ApiResponse(responseCode = "500", description = "Ошибка сервера")})
     public ResponseEntity<List<PaymentDto>> getAllPaymentsByRecipientInn(@RequestParam("inn") final long inn) {
         List<PaymentDto> paymentDtoList = paymentService.getPaymentEntitiesByRecipientInn(inn);
         LOGGER.info("GET /get-all-payments-by-recipient-inn?inn={}: {}", inn, HttpStatus.OK);
+        return ResponseEntity.ok(paymentDtoList);
+    }
+
+    @GetMapping("/get-all-payments")
+    @Operation(summary = "Получить список всех платежей",
+            description = "Возвращает список всех платежей List&lt;PaymentDto&gt;<br>" +
+                    "Если платежи не найдены - возвращает пустой список",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Успех", content =
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PaymentDto.class))),
+                    @ApiResponse(responseCode = "500", description = "Ошибка сервера")})
+    public ResponseEntity<List<PaymentDto>> getAllPayments() {
+        List<PaymentDto> paymentDtoList = paymentService.getAllPayments();
+        LOGGER.info("GET /get-all-payments: {}", HttpStatus.OK);
         return ResponseEntity.ok(paymentDtoList);
     }
 }

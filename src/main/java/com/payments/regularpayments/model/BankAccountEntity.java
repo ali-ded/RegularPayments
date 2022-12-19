@@ -30,12 +30,28 @@ public class BankAccountEntity {
         sumOfMoney = sumOfMoney.add(amount);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public BigDecimal getSumOfMoney() {
+        return sumOfMoney;
+    }
+
+    public void setSumOfMoney(BigDecimal sumOfMoney) {
+        this.sumOfMoney = sumOfMoney;
+    }
+
+    public PersonEntity getPersonEntity() {
+        return personEntity;
+    }
+
+    public void setPersonEntity(PersonEntity personEntity) {
+        this.personEntity = personEntity;
     }
 
     @Override

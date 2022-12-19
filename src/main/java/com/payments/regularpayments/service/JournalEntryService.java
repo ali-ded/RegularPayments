@@ -109,7 +109,7 @@ public class JournalEntryService {
     }
 
     public JournalEntryDto lastWriteOff(long paymentId) throws JournalEntryNotFoundException {
-        Page<JournalEntryEntity> journalEntryEntityPage = journalEntryRepository.lastWriteOff(paymentId,
+        Page<JournalEntryEntity> journalEntryEntityPage = journalEntryRepository.getLastWriteOff(paymentId,
                 PageRequest.of(0, 1));
         return journalEntryMapper.journalEntryEntityToJournalEntryDto(
                 journalEntryEntityPage

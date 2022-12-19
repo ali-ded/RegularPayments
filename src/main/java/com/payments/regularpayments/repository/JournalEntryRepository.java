@@ -24,12 +24,13 @@ public interface JournalEntryRepository extends CrudRepository<JournalEntryEntit
 
     @Query("select journalEntry " +
             "from JournalEntryEntity journalEntry " +
-            "where journalEntry.paymentEntity.id = :id")
+            "where journalEntry.paymentEntity.id = :id " +
+            "order by journalEntry.paymentDate asc")
     List<JournalEntryEntity> findJournalEntryEntitiesByPaymentId(@Param("id") long paymentId);
 
     @Query("select journalEntry " +
             "from JournalEntryEntity journalEntry " +
             "where journalEntry.paymentEntity.id = :id and journalEntry.paymentResult = true " +
             "order by journalEntry.paymentDate desc")
-    Page<JournalEntryEntity> lastWriteOff(@Param("id") long paymentId, Pageable pageable);
+    Page<JournalEntryEntity> getLastWriteOff(@Param("id") long paymentId, Pageable pageable);
 }
