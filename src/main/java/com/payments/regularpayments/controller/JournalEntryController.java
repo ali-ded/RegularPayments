@@ -110,4 +110,27 @@ public class JournalEntryController {
         LOGGER.info("GET /get-all-journal-entries-by-payment?paymentId={}: {}", paymentId, HttpStatus.OK);
         return ResponseEntity.ok(journalEntryDtoList);
     }
+
+    @Operation(summary = "Списание платежа",
+            description = "Метод проверяет необходимость списания платежа по заданному идентификатору. " +
+                    "При этом учитываются время последнего списания и период списания, указанный в платеже. " +
+                    "В случае необходимости сумма транзакции списывается со счета отправителя на счет получателя.<br>" +
+                    "Метод ничего не возвращает.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Успех"),
+                    @ApiResponse(responseCode = "404", description = "Платеж не найден"),
+                    @ApiResponse(responseCode = "500", description = "Ошибка сервера")
+            })
+    @GetMapping("/write-off-payment")
+    public ResponseEntity<Void> writeOffPayment(@RequestParam final long paymentId)
+            throws JournalEntryNotFoundException, PaymentNotFoundException {
+        try {
+            journalEntryService.writeOffPayment(paymentId);
+        } catch (JournalEntryNotFoundException | PaymentNotFoundException e) {
+            LOGGER.info("GET /write-off-payment?paymentId={}: {}", paymentId, HttpStatus.NOT_FOUND);
+            throw e;
+        }
+        LOGGER.info("GET /write-off-payment?paymentId={}: {}", paymentId, HttpStatus.OK);
+        return ResponseEntity.ok().build();
+    }
 }

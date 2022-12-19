@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
-    public boolean existsByInn(Long inn);
-    public boolean existsByPhoneNumber(String phoneNumber);
+    boolean existsByInn(Long inn);
+    boolean existsByPhoneNumber(String phoneNumber);
 }

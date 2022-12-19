@@ -8,33 +8,21 @@ public class PaymentCreateDto {
     @Min(value = 100000000000L, message = "номер счета плательщика должен содержать 12 цифр")
     @Max(value = 999999999999L, message = "номер счета плательщика должен содержать 12 цифр")
     @NotNull(message = "номер счет плательщика обязательно должен быть указан")
-    private Long creditAccount;
+    private final Long creditAccount;
     @Min(value = 100000000000L, message = "номер счета получателя должен содержать 12 цифр")
     @Max(value = 999999999999L, message = "номер счета получателя должен содержать 12 цифр")
     @NotNull(message = "номер счет получателя обязательно должен быть указан")
-    private Long debitAccount;
+    private final Long debitAccount;
     @Digits(integer = 12, fraction = 2, message = "должно быть не больше 2 десятичных знаков")
     @Positive(message = "сумма транзакции должна быть больше 0")
     @NotNull(message = "сумма транзакции обязательно должна быть указана")
-    private BigDecimal transactionAmount;
+    private final BigDecimal transactionAmount;
 
     private WriteOffPeriod writeOffPeriod;
 
     public PaymentCreateDto(Long creditAccount, Long debitAccount, BigDecimal transactionAmount) {
         this.creditAccount = creditAccount;
         this.debitAccount = debitAccount;
-        this.transactionAmount = transactionAmount;
-    }
-
-    public void setCreditAccount(Long creditAccount) {
-        this.creditAccount = creditAccount;
-    }
-
-    public void setDebitAccount(Long debitAccount) {
-        this.debitAccount = debitAccount;
-    }
-
-    public void setTransactionAmount(BigDecimal transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 
@@ -88,24 +76,12 @@ public class PaymentCreateDto {
             return days;
         }
 
-        public void setDays(Long days) {
-            this.days = days;
-        }
-
         public Long getHours() {
             return hours;
         }
 
-        public void setHours(Long hours) {
-            this.hours = hours;
-        }
-
         public Long getMinutes() {
             return minutes;
-        }
-
-        public void setMinutes(Long minutes) {
-            this.minutes = minutes;
         }
 
         @Override

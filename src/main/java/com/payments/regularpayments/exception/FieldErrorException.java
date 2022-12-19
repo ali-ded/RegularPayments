@@ -5,7 +5,7 @@ import org.springframework.validation.FieldError;
 import java.util.List;
 
 public class FieldErrorException extends Exception{
-    private List<FieldError> errors;
+    private final List<FieldError> errors;
 
     public FieldErrorException(List<FieldError> errors, String message) {
         super(message);

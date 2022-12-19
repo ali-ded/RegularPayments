@@ -1,6 +1,8 @@
 package com.payments.regularpayments.repository;
 
 import com.payments.regularpayments.model.JournalEntryEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,4 +26,10 @@ public interface JournalEntryRepository extends CrudRepository<JournalEntryEntit
             "from JournalEntryEntity journalEntry " +
             "where journalEntry.paymentEntity.id = :id")
     List<JournalEntryEntity> findJournalEntryEntitiesByPaymentId(@Param("id") long paymentId);
+
+    @Query("select journalEntry " +
+            "from JournalEntryEntity journalEntry " +
+            "where journalEntry.paymentEntity.id = :id and journalEntry.paymentResult = true " +
+            "order by journalEntry.paymentDate desc")
+    Page<JournalEntryEntity> lastWriteOff(@Param("id") long paymentId, Pageable pageable);
 }

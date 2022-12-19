@@ -25,7 +25,9 @@ public class PaymentService {
     private final Logger LOGGER = LoggerFactory.getLogger(PaymentService.class);
 
     @Autowired
-    public PaymentService(PaymentRepository paymentRepository, BankAccountRepository bankAccountRepository, PaymentMapper paymentMapper) {
+    public PaymentService(PaymentRepository paymentRepository,
+                          BankAccountRepository bankAccountRepository,
+                          PaymentMapper paymentMapper) {
         this.paymentRepository = paymentRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.paymentMapper = paymentMapper;

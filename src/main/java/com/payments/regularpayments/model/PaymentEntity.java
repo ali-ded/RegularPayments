@@ -33,20 +33,6 @@ public class PaymentEntity {
     public PaymentEntity() {
     }
 
-    public PaymentEntity(Long id) {
-        this.id = id;
-    }
-
-    public PaymentEntity(BankAccountEntity creditAccount,
-                         BankAccountEntity debitAccount,
-                         BigDecimal transactionAmount,
-                         Long writeOffPeriod) {
-        this.creditAccount = creditAccount;
-        this.debitAccount = debitAccount;
-        this.transactionAmount = transactionAmount;
-        this.writeOffPeriod = writeOffPeriod;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -67,10 +53,6 @@ public class PaymentEntity {
         this.writeOffPeriod = writeOffPeriod;
     }
 
-    public void setJournalEntryEntities(Set<JournalEntryEntity> journalEntryEntities) {
-        this.journalEntryEntities = journalEntryEntities;
-    }
-
     public Long getId() {
         return id;
     }
@@ -89,10 +71,6 @@ public class PaymentEntity {
 
     public Long getWriteOffPeriod() {
         return writeOffPeriod;
-    }
-
-    public Set<JournalEntryEntity> getJournalEntryEntities() {
-        return journalEntryEntities;
     }
 
     @Override

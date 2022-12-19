@@ -22,33 +22,20 @@ public class BankAccountEntity {
     public BankAccountEntity() {
     }
 
-    public BankAccountEntity(BigDecimal sumOfMoney, PersonEntity personEntity) {
-        this.sumOfMoney = sumOfMoney;
-        this.personEntity = personEntity;
+    public void debit(BigDecimal amount) {
+        sumOfMoney = sumOfMoney.subtract(amount);
+    }
+
+    public void credit(BigDecimal amount) {
+        sumOfMoney = sumOfMoney.add(amount);
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setSumOfMoney(BigDecimal sumOfMoney) {
-        this.sumOfMoney = sumOfMoney;
-    }
-
-    public void setPersonEntity(PersonEntity personEntity) {
-        this.personEntity = personEntity;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public BigDecimal getSumOfMoney() {
-        return sumOfMoney;
-    }
-
-    public PersonEntity getPersonEntity() {
-        return personEntity;
     }
 
     @Override

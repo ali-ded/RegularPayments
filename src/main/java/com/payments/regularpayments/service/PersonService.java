@@ -18,10 +18,12 @@ import java.util.List;
 public class PersonService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonService.class);
     private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
         this.personRepository = personRepository;
+        this.personMapper = personMapper;
     }
 
     public PersonEntity save(PersonDto personDto) throws PersonInnAlreadyExistsException, PersonPhoneNumberAlreadyExistsException {
@@ -32,13 +34,13 @@ public class PersonService {
         if (personRepository.existsByPhoneNumber(personDto.getPhoneNumber())) {
             throw new PersonPhoneNumberAlreadyExistsException("Клиент банка с таким номером телефона уже зарегистрирован");
         }
-        return personRepository.save(PersonMapper.INSTANCE.personDtoToPersonEntity(personDto));
+        return personRepository.save(personMapper.personDtoToPersonEntity(personDto));
     }
 
     public PersonEntity update(PersonDto personDto, Long id) throws PersonNotFoundException {
         LOGGER.info("Update person data by ID {}", id);
         if (personRepository.existsById(id)) {
-            PersonEntity personEntity = PersonMapper.INSTANCE.personDtoToPersonEntity(personDto);
+            PersonEntity personEntity = personMapper.personDtoToPersonEntity(personDto);
             personEntity.setId(id);
             return personRepository.save(personEntity);
         } else {

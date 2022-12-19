@@ -12,7 +12,6 @@ import java.time.Duration;
 
 @Mapper(componentModel = "spring", imports = {Duration.class, PaymentCreateDto.class})
 public interface PaymentMapper {
-
     @Mapping(source = "paymentCreateDto.creditAccount", target = "creditAccount.id")
     @Mapping(source = "paymentCreateDto.debitAccount", target = "debitAccount.id")
     @Mapping(target = "writeOffPeriod",

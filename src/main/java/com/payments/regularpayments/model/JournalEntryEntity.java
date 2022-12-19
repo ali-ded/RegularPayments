@@ -34,16 +34,8 @@ public class JournalEntryEntity {
         return id;
     }
 
-    public void setPaymentEntity(PaymentEntity paymentEntity) {
-        this.paymentEntity = paymentEntity;
-    }
-
     public PaymentEntity getPaymentEntity() {
         return paymentEntity;
-    }
-
-    public void setPaymentResult(Boolean paymentResult) {
-        this.paymentResult = paymentResult;
     }
 
     public Boolean getPaymentResult() {
