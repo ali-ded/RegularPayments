@@ -121,8 +121,8 @@ public class JournalEntryController {
                     @ApiResponse(responseCode = "404", description = "Платеж не найден"),
                     @ApiResponse(responseCode = "500", description = "Ошибка сервера")
             })
-    @GetMapping("/write-off-payment")
-    public ResponseEntity<Void> writeOffPayment(@RequestParam final long paymentId)
+    @PostMapping("/write-off-payment/{paymentId}")
+    public ResponseEntity<Void> writeOffPayment(@PathVariable final long paymentId)
             throws JournalEntryNotFoundException, PaymentNotFoundException {
         try {
             journalEntryService.writeOffPayment(paymentId);
